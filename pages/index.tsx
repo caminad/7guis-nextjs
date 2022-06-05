@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Counter from '../components/Counter'
+import FlightBooker from '../components/FlightBooker'
 import TemperatureConverter from '../components/TemperatureConverter'
 
 const ExternalLink = (props: { href: string; children: React.ReactNode }) => (
@@ -62,6 +63,14 @@ const Home: NextPage = () => {
       </SubHeading>
 
       <TemperatureConverter />
+
+      <SubHeading>
+        <ExternalLink href="https://eugenkiss.github.io/7guis/tasks#flight">
+          Flight Booker
+        </ExternalLink>
+      </SubHeading>
+
+      <FlightBooker />
     </main>
   )
 }
