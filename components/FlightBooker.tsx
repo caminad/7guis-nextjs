@@ -1,41 +1,7 @@
-import { useEffect, useReducer, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-interface BookingState {
-  isReturn: boolean
-  start: string
-  return: string
-}
-
-const initialState: BookingState = {
-  isReturn: false,
-  start: new Date().toISOString().split('T')[0],
-  return: new Date().toISOString().split('T')[0],
-}
-
-const actions = {
-  setIsReturn(value: boolean) {
-    return { type: 'SET_IS_RETURN', value } as const
-  },
-  setStart(value: string) {
-    return { type: 'SET_START', value } as const
-  },
-  setReturn(value: string) {
-    return { type: 'SET_RETURN', value } as const
-  },
-} as const
-type BookingAction = ReturnType<typeof actions[keyof typeof actions]>
-
-function reducer(state: BookingState, action: BookingAction): BookingState {
-  switch (action.type) {
-    case 'SET_IS_RETURN':
-      return { ...state, isReturn: action.value }
-    case 'SET_START':
-      return { ...state, start: action.value }
-    case 'SET_RETURN':
-      return { ...state, return: action.value }
-    default:
-      return state
-  }
+function today() {
+  return new Date().toISOString().split('T')[0]
 }
 
 function processBooking(data: FormData) {
@@ -53,14 +19,16 @@ function processBooking(data: FormData) {
 }
 
 function FlightBooker() {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [isReturn, setIsReturn] = useState(false)
+  const [startDate, setStartDate] = useState(today)
+  const [returnDate, setReturnDate] = useState(startDate)
   const [message, setMessage] = useState('')
   const [invalid, setInvalid] = useState(false)
 
   useEffect(() => {
-    // Clear old message when state changes
+    // Clear old message when dates change
     setMessage('')
-  }, [state])
+  }, [startDate, returnDate])
 
   return (
     <form
@@ -75,10 +43,8 @@ function FlightBooker() {
     >
       <div className="grid auto-rows-fr gap-2">
         <select
-          value={state.isReturn ? 'return' : 'single'}
-          onChange={(e) =>
-            dispatch(actions.setIsReturn(e.currentTarget.value === 'return'))
-          }
+          value={isReturn ? 'return' : 'single'}
+          onChange={(e) => setIsReturn(e.currentTarget.value === 'return')}
           className="rounded border"
         >
           <option value="single">one-way flight</option>
@@ -87,22 +53,23 @@ function FlightBooker() {
         <input
           type="date"
           name="start"
-          value={state.start}
-          onChange={(e) => dispatch(actions.setStart(e.currentTarget.value))}
+          value={startDate}
+          min={today()}
+          onChange={(e) => setStartDate(e.currentTarget.value)}
           className="border invalid:border-pink-500 invalid:text-pink-600"
         />
         <input
           type="date"
           name="return"
-          disabled={!state.isReturn}
-          value={state.return}
-          min={state.start}
-          onChange={(e) => dispatch(actions.setReturn(e.currentTarget.value))}
+          disabled={!isReturn}
+          value={returnDate}
+          min={startDate}
+          onChange={(e) => setReturnDate(e.currentTarget.value)}
           className="border invalid:border-pink-500 invalid:text-pink-600 disabled:cursor-not-allowed disabled:opacity-50"
         />
         <button
           type="submit"
-          disabled={invalid || (state.isReturn && state.start > state.return)}
+          disabled={invalid || (isReturn && startDate > returnDate)}
           className="rounded border p-1 font-semibold disabled:cursor-not-allowed disabled:opacity-50"
         >
           Book
