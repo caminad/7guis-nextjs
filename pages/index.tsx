@@ -14,45 +14,59 @@ function ExtLink(props: { href: string; children: React.ReactNode }) {
 
 const Home: NextPage = () => {
   return (
-    <main className="container">
+    <>
       <Head>
         <title>7GUIs in Next.js</title>
       </Head>
 
-      <h1>
-        <ExtLink href="https://eugenkiss.github.io/7guis/">7GUIs</ExtLink> built{' '}
-        with <ExtLink href="https://nextjs.org">Next.js</ExtLink> and{' '}
-        <ExtLink href="https://picocss.com">Pico.css</ExtLink>
-      </h1>
+      <main>
+        <header>
+          <h1>
+            <ExtLink href="https://eugenkiss.github.io/7guis/">7GUIs</ExtLink>{' '}
+            built with <ExtLink href="https://nextjs.org">Next.js</ExtLink> and{' '}
+            <ExtLink href="https://picocss.com">Pico.css</ExtLink>
+          </h1>
+        </header>
 
-      <h2>Counter</h2>
+        <section>
+          <h2>Counter</h2>
+          <Counter />
+          <p>
+            <ExtLink href="https://eugenkiss.github.io/7guis/tasks#counter">
+              Counter task
+            </ExtLink>
+          </p>
+        </section>
 
-      <Counter />
-      <p>
-        <ExtLink href="https://eugenkiss.github.io/7guis/tasks#counter">
-          Counter task
-        </ExtLink>
-      </p>
+        <section>
+          <h2>Temperature Converter</h2>
+          <TemperatureConverter />
+          <p>
+            <ExtLink href="https://eugenkiss.github.io/7guis/tasks#temp">
+              Temperature Converter task
+            </ExtLink>
+          </p>
+        </section>
 
-      <h2>Temperature Converter</h2>
+        <section>
+          <h2>Flight Booker</h2>
+          <FlightBooker />
+          <p>
+            <ExtLink href="https://eugenkiss.github.io/7guis/tasks#flight">
+              Flight Booker task
+            </ExtLink>
+          </p>
+        </section>
+      </main>
 
-      <TemperatureConverter />
-
-      <p>
-        <ExtLink href="https://eugenkiss.github.io/7guis/tasks#temp">
-          Temperature Converter task
-        </ExtLink>
-      </p>
-
-      <h2>Flight Booker</h2>
-
-      <FlightBooker />
-      <p>
-        <ExtLink href="https://eugenkiss.github.io/7guis/tasks#flight">
-          Flight Booker task
-        </ExtLink>
-      </p>
-    </main>
+      <footer>
+        <p>
+          <ExtLink href="https://github.com/caminad/7guis-nextjs">
+            Source code
+          </ExtLink>
+        </p>
+      </footer>
+    </>
   )
 }
 

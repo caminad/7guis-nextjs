@@ -1,5 +1,5 @@
-import '@picocss/pico'
+import '../styles/main.scss'
 
 export function Wrapper(props: { children: React.ReactNode }) {
-  return <main className="container">{props.children}</main>
+  return <main>{props.children}</main>
 }

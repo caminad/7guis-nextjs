@@ -17,7 +17,7 @@ function useTemperature() {
 function TemperatureConverter() {
   const temperature = useTemperature()
   return (
-    <form onSubmit={(e) => e.preventDefault()} className="grid">
+    <div className="grid">
       <label>
         Celsius
         <input
@@ -38,7 +38,7 @@ function TemperatureConverter() {
           onChange={(e) => temperature.setF(e.currentTarget.valueAsNumber)}
         />
       </label>
-    </form>
+    </div>
   )
 }
 
