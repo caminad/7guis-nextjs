@@ -1,20 +1,15 @@
-import { FormEventHandler, useState } from 'react'
+import { useReducer } from 'react'
 
 function Counter() {
-  const [count, setCount] = useState(0)
-
-  const handleSubmit: FormEventHandler = (e) => {
-    e.preventDefault()
-    setCount((c) => c + 1)
-  }
+  const [value, count] = useReducer((n: number) => n + 1, 0)
 
   return (
-    <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-2">
-      <output className="border px-1">{count}</output>
-      <button type="submit" className="rounded border px-2">
+    <div className="grid">
+      <input readOnly value={value} />
+      <button type="button" onClick={count}>
         Count
       </button>
-    </form>
+    </div>
   )
 }
 

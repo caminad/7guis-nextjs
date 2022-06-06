@@ -1,8 +1,4 @@
-import { useEffect, useState } from 'react'
-
-function today() {
-  return new Date().toISOString().split('T')[0]
-}
+import { useEffect, useRef, useState } from 'react'
 
 function processBooking(data: FormData) {
   const dates = {
@@ -13,69 +9,103 @@ function processBooking(data: FormData) {
     return `Booking failed: start date is missing`
   }
   if (typeof dates.return !== 'string') {
-    return `Booking a single flight on ${dates.start}`
+    return `Booking a one-way flight on ${dates.start}`
   }
   return `Booking a return flight from ${dates.start} to ${dates.return}`
 }
 
+function DateInput(props: {
+  name: string
+  disabled?: boolean
+  min: string
+  value: string
+  onChange: (value: string) => void
+}) {
+  const [invalid, setInvalid] = useState<boolean>()
+
+  useEffect(() => {
+    if (inputRef.current) {
+      setInvalid(!inputRef.current.checkValidity())
+    }
+  }, [props.min, props.value])
+
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  return (
+    <input
+      ref={inputRef}
+      type="date"
+      required
+      aria-invalid={invalid ? 'true' : undefined}
+      name={props.name}
+      disabled={props.disabled}
+      min={props.min}
+      value={props.value}
+      onChange={(e) => props.onChange(e.currentTarget.value)}
+      onInvalid={() => setInvalid(true)}
+    />
+  )
+}
+
 function FlightBooker() {
+  const [today] = useState(() => {
+    return new Date().toISOString().split('T')[0]
+  })
+
   const [isReturn, setIsReturn] = useState(false)
   const [startDate, setStartDate] = useState(today)
   const [returnDate, setReturnDate] = useState(startDate)
   const [message, setMessage] = useState('')
   const [invalid, setInvalid] = useState(false)
 
+  const formRef = useRef<HTMLFormElement>(null)
+
   useEffect(() => {
-    // Clear old message when dates change
     setMessage('')
-  }, [startDate, returnDate])
+    if (formRef.current) {
+      setInvalid(!formRef.current.checkValidity())
+    }
+  }, [isReturn, startDate, returnDate])
 
   return (
     <form
+      ref={formRef}
       onSubmit={(e) => {
         e.preventDefault()
         const data = new FormData(e.currentTarget)
         setMessage(processBooking(data))
       }}
-      onChange={(e) => setInvalid(!e.currentTarget.checkValidity())}
-      onInvalid={() => setInvalid(true)}
-      className="grid gap-2"
     >
-      <div className="grid auto-rows-fr gap-2">
-        <select
-          value={isReturn ? 'return' : 'single'}
-          onChange={(e) => setIsReturn(e.currentTarget.value === 'return')}
-          className="rounded border"
-        >
-          <option value="single">one-way flight</option>
-          <option value="return">return flight</option>
-        </select>
-        <input
-          type="date"
+      <select
+        value={isReturn ? 'return' : ''}
+        onChange={(e) => setIsReturn(e.currentTarget.value === 'return')}
+      >
+        <option value="">one-way flight</option>
+        <option value="return">return flight</option>
+      </select>
+      <label>
+        Start date
+        <DateInput
           name="start"
+          min={today}
           value={startDate}
-          min={today()}
-          onChange={(e) => setStartDate(e.currentTarget.value)}
-          className="border invalid:border-pink-500 invalid:text-pink-600"
+          onChange={setStartDate}
         />
-        <input
-          type="date"
+      </label>
+      <label>
+        Return date
+        <DateInput
           name="return"
           disabled={!isReturn}
-          value={returnDate}
           min={startDate}
-          onChange={(e) => setReturnDate(e.currentTarget.value)}
-          className="border invalid:border-pink-500 invalid:text-pink-600 disabled:cursor-not-allowed disabled:opacity-50"
+          value={returnDate}
+          onChange={setReturnDate}
         />
-        <button
-          type="submit"
-          disabled={invalid || (isReturn && startDate > returnDate)}
-          className="rounded border p-1 font-semibold disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          Book
-        </button>
-      </div>
-      {message && <p className="text-sm text-gray-600">ℹ️ {message}</p>}
+      </label>
+      <button type="submit" disabled={invalid}>
+        Book
+      </button>
+      {message && <p>ℹ️ {message}</p>}
     </form>
   )
 }

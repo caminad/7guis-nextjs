@@ -1,3 +1,5 @@
-import '../styles/globals.css'
+import '@picocss/pico'
 
-export { Fragment as Wrapper } from 'react'
+export function Wrapper(props: { children: React.ReactNode }) {
+  return <main className="container">{props.children}</main>
+}
