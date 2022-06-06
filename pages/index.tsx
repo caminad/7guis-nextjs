@@ -16,7 +16,11 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>7GUIs in Next.js</title>
+        <title>7GUIs</title>
+        <meta
+          name="description"
+          content="7GUIs built with Next.js and Pico.css"
+        />
       </Head>
 
       <main>
