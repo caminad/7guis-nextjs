@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Counter from '../components/Counter'
 import FlightBooker from '../components/FlightBooker'
 import TemperatureConverter from '../components/TemperatureConverter'
+import Timer from '../components/Timer'
 
 function ExtLink(props: { href: string; children: React.ReactNode }) {
   return (
@@ -32,7 +33,7 @@ const Home: NextPage = () => {
           </h1>
         </header>
 
-        <section>
+        <section id="counter">
           <h2>Counter</h2>
           <Counter />
           <p>
@@ -42,7 +43,7 @@ const Home: NextPage = () => {
           </p>
         </section>
 
-        <section>
+        <section id="temp">
           <h2>Temperature Converter</h2>
           <TemperatureConverter />
           <p>
@@ -52,12 +53,22 @@ const Home: NextPage = () => {
           </p>
         </section>
 
-        <section>
+        <section id="flight">
           <h2>Flight Booker</h2>
           <FlightBooker />
           <p>
             <ExtLink href="https://eugenkiss.github.io/7guis/tasks#flight">
               Flight Booker task
+            </ExtLink>
+          </p>
+        </section>
+
+        <section id="timer">
+          <h2>Timer</h2>
+          <Timer />
+          <p>
+            <ExtLink href="https://eugenkiss.github.io/7guis/tasks#timer">
+              Timer task
             </ExtLink>
           </p>
         </section>
