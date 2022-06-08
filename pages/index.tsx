@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Counter from '../components/Counter'
+import Crud from '../components/Crud'
 import FlightBooker from '../components/FlightBooker'
 import TemperatureConverter from '../components/TemperatureConverter'
 import Timer from '../components/Timer'
@@ -69,6 +70,16 @@ const Home: NextPage = () => {
           <p>
             <ExtLink href="https://eugenkiss.github.io/7guis/tasks#timer">
               Timer task
+            </ExtLink>
+          </p>
+        </section>
+
+        <section id="crud">
+          <h2>CRUD</h2>
+          <Crud />
+          <p>
+            <ExtLink href="https://eugenkiss.github.io/7guis/tasks#crud">
+              CRUD task
             </ExtLink>
           </p>
         </section>
