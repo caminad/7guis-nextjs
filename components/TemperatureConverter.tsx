@@ -1,44 +1,67 @@
-import { useState } from 'react'
-
-function round(value: number) {
-  return Math.round((value + Number.EPSILON) * 1000) / 1000
-}
+import { Big } from 'big.js'
+import { Dispatch, SetStateAction, useCallback, useMemo, useState } from 'react'
 
 function useTemperature() {
-  const [state, setState] = useState(NaN)
-  return {
-    C: round(state),
-    setC: (value: number) => setState(value),
-    F: round(state * (9 / 5) + 32),
-    setF: (value: number) => setState((value - 32) * (5 / 9)),
+  const [celsius, setCelsius] = useState<Big>()
+  const fahrenheit = useMemo(() => celsius?.times(9).div(5).add(32), [celsius])
+  const setFahrenheit: typeof setCelsius = useCallback((value) => {
+    setCelsius((c) => {
+      if (typeof value === 'function') value = value(c)
+      return value?.minus(32).times(5).div(9)
+    })
+  }, [])
+  return { celsius, setCelsius, fahrenheit, setFahrenheit } as const
+}
+
+function tryBig(value: string) {
+  try {
+    return new Big(value)
+  } catch {
+    // ignore
   }
 }
 
-function TemperatureConverter() {
-  const temperature = useTemperature()
+function TemperatureInput(props: {
+  name: string
+  placeholder: string
+  value: Big | undefined
+  onChange: Dispatch<SetStateAction<Big | undefined>>
+}) {
   return (
-    <div className="grid">
+    <input
+      type="number"
+      inputMode="decimal"
+      name={props.name}
+      placeholder={props.placeholder}
+      value={props.value?.round(15).toString() ?? ''}
+      onChange={(e) => props.onChange(tryBig(e.currentTarget.value))}
+    />
+  )
+}
+
+function TemperatureConverter() {
+  const { celsius, setCelsius, fahrenheit, setFahrenheit } = useTemperature()
+  return (
+    <form className="grid">
       <label>
         Celsius
-        <input
-          type="number"
+        <TemperatureInput
           name="celsius"
           placeholder="Temperature in °C"
-          value={Number.isFinite(temperature.C) ? temperature.C : ''}
-          onChange={(e) => temperature.setC(e.currentTarget.valueAsNumber)}
+          value={celsius}
+          onChange={setCelsius}
         />
       </label>
       <label>
         Fahrenheit
-        <input
-          type="number"
+        <TemperatureInput
           name="fahrenheit"
           placeholder="Temperature in °F"
-          value={Number.isFinite(temperature.F) ? temperature.F : ''}
-          onChange={(e) => temperature.setF(e.currentTarget.valueAsNumber)}
+          value={fahrenheit}
+          onChange={setFahrenheit}
         />
       </label>
-    </div>
+    </form>
   )
 }
 
