@@ -1,17 +1,5 @@
 import { Big } from 'big.js'
-import { Dispatch, SetStateAction, useCallback, useMemo, useState } from 'react'
-
-function useTemperature() {
-  const [celsius, setCelsius] = useState<Big>()
-  const fahrenheit = useMemo(() => celsius?.times(9).div(5).add(32), [celsius])
-  const setFahrenheit: typeof setCelsius = useCallback((value) => {
-    setCelsius((c) => {
-      if (typeof value === 'function') value = value(c)
-      return value?.minus(32).times(5).div(9)
-    })
-  }, [])
-  return { celsius, setCelsius, fahrenheit, setFahrenheit } as const
-}
+import { useState } from 'react'
 
 function tryBig(value: string) {
   try {
@@ -21,44 +9,46 @@ function tryBig(value: string) {
   }
 }
 
-function TemperatureInput(props: {
-  name: string
-  placeholder: string
-  value: Big | undefined
-  onChange: Dispatch<SetStateAction<Big | undefined>>
-}) {
-  return (
-    <input
-      type="number"
-      inputMode="decimal"
-      name={props.name}
-      placeholder={props.placeholder}
-      value={props.value?.round(15).toString() ?? ''}
-      onChange={(e) => props.onChange(tryBig(e.currentTarget.value))}
-    />
-  )
+function fahrenheitToCelsius(fahrenheit: string) {
+  return tryBig(fahrenheit)?.minus(32).times(5).div(9).toString() ?? ''
+}
+
+function celsiusToFahrenheit(celsius: string) {
+  return tryBig(celsius)?.times(9).div(5).plus(32).toString() ?? ''
 }
 
 function TemperatureConverter() {
-  const { celsius, setCelsius, fahrenheit, setFahrenheit } = useTemperature()
+  const [celsius, setCelsius] = useState('')
+  const [fahrenheit, setFahrenheit] = useState('')
+
   return (
     <form className="grid">
       <label>
         Celsius
-        <TemperatureInput
-          name="celsius"
+        <input
+          type="number"
+          inputMode="decimal"
           placeholder="Temperature in °C"
           value={celsius}
-          onChange={setCelsius}
+          onChange={(e) => {
+            const celsius = e.currentTarget.value
+            setCelsius(celsius)
+            setFahrenheit(celsiusToFahrenheit(celsius))
+          }}
         />
       </label>
       <label>
         Fahrenheit
-        <TemperatureInput
-          name="fahrenheit"
+        <input
+          type="number"
+          inputMode="decimal"
           placeholder="Temperature in °F"
           value={fahrenheit}
-          onChange={setFahrenheit}
+          onChange={(e) => {
+            const fahrenheit = e.currentTarget.value
+            setFahrenheit(fahrenheit)
+            setCelsius(fahrenheitToCelsius(fahrenheit))
+          }}
         />
       </label>
     </form>
