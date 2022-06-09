@@ -21,7 +21,7 @@ const Home: NextPage = () => {
         <title>7GUIs</title>
         <meta
           name="description"
-          content="7GUIs built with Next.js and Pico.css"
+          content="7GUIs tasks built with Next.js and Pico.css"
         />
       </Head>
 
@@ -29,7 +29,8 @@ const Home: NextPage = () => {
         <header>
           <h1>
             <ExtLink href="https://eugenkiss.github.io/7guis/">7GUIs</ExtLink>{' '}
-            built with <ExtLink href="https://nextjs.org">Next.js</ExtLink> and{' '}
+            tasks built with{' '}
+            <ExtLink href="https://nextjs.org">Next.js</ExtLink> and{' '}
             <ExtLink href="https://picocss.com">Pico.css</ExtLink>
           </h1>
         </header>
