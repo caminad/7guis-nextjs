@@ -1,15 +1,15 @@
-import { useReducer } from 'react'
+import { FormEvent, useReducer } from 'react'
 
 function Counter() {
-  const [value, count] = useReducer((n: number) => n + 1, 0)
-
+  const [count, handleSubmit] = useReducer((state: number, e: FormEvent) => {
+    e.preventDefault()
+    return state + 1
+  }, 0)
   return (
-    <div className="grid">
-      <input readOnly value={value} />
-      <button type="button" onClick={count}>
-        Count
-      </button>
-    </div>
+    <form onSubmit={handleSubmit} className="grid">
+      <input type="number" name="count" value={count} readOnly />
+      <button type="submit">Count</button>
+    </form>
   )
 }
 
