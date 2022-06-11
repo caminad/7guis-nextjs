@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { Dispatch, useEffect, useRef, useState } from 'react'
 
 function processBooking(data: FormData) {
   const dates = {
@@ -14,26 +14,39 @@ function processBooking(data: FormData) {
   return `Booking a return flight from ${dates.start} to ${dates.return}`
 }
 
+function SwitchInput(props: {
+  defaultChecked: boolean
+  onChange: Dispatch<boolean>
+}) {
+  return (
+    <input
+      type="checkbox"
+      role="switch"
+      defaultChecked={props.defaultChecked}
+      onChange={(e) => props.onChange(e.currentTarget.checked)}
+    />
+  )
+}
+
 function DateInput(props: {
   name: string
   disabled?: boolean
   min: string
   value: string
-  onChange: (value: string) => void
+  onChange: Dispatch<string>
 }) {
+  const ref = useRef<HTMLInputElement>(null)
   const [invalid, setInvalid] = useState<boolean>()
 
   useEffect(() => {
-    if (inputRef.current) {
-      setInvalid(!inputRef.current.checkValidity())
+    if (ref.current) {
+      setInvalid(!ref.current.checkValidity())
     }
   }, [props.min, props.value])
 
-  const inputRef = useRef<HTMLInputElement>(null)
-
   return (
     <input
-      ref={inputRef}
+      ref={ref}
       type="date"
       required
       aria-invalid={invalid ? 'true' : undefined}
@@ -52,7 +65,7 @@ function FlightBooker() {
     return new Date().toISOString().split('T')[0]
   })
 
-  const [isReturn, setIsReturn] = useState(false)
+  const [returnEnabled, setReturnEnabled] = useState(false)
   const [startDate, setStartDate] = useState(today)
   const [returnDate, setReturnDate] = useState(startDate)
   const [message, setMessage] = useState('')
@@ -65,7 +78,7 @@ function FlightBooker() {
     if (formRef.current) {
       setInvalid(!formRef.current.checkValidity())
     }
-  }, [isReturn, startDate, returnDate])
+  }, [returnEnabled, startDate, returnDate])
 
   return (
     <form
@@ -76,13 +89,15 @@ function FlightBooker() {
         setMessage(processBooking(data))
       }}
     >
-      <select
-        value={isReturn ? 'return' : ''}
-        onChange={(e) => setIsReturn(e.currentTarget.value === 'return')}
-      >
-        <option value="">one-way flight</option>
-        <option value="return">return flight</option>
-      </select>
+      <fieldset>
+        <label>
+          <SwitchInput
+            defaultChecked={returnEnabled}
+            onChange={setReturnEnabled}
+          />{' '}
+          Return flight
+        </label>
+      </fieldset>
       <label>
         Start date
         <DateInput
@@ -96,7 +111,7 @@ function FlightBooker() {
         Return date
         <DateInput
           name="return"
-          disabled={!isReturn}
+          disabled={!returnEnabled}
           min={startDate}
           value={returnDate}
           onChange={setReturnDate}
