@@ -1,7 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 
-const INITIAL_DURATION = 30_000
-const MAX_DURATION = 60_000
+const nf = new Intl.NumberFormat(undefined, {
+  style: 'unit',
+  unit: 'second',
+  unitDisplay: 'narrow',
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+})
 
 function useAnimationEffect(effect: (delta: number) => void) {
   const effectRef = useRef(effect)
@@ -20,8 +25,8 @@ function useAnimationEffect(effect: (delta: number) => void) {
   }, [])
 }
 
-function Timer() {
-  const [duration, setDuration] = useState(INITIAL_DURATION)
+function Timer({ initialDuration = 30_000, maxDuration = 60_000 }) {
+  const [duration, setDuration] = useState(initialDuration)
   const [time, setTime] = useState(0)
 
   useAnimationEffect((delta) => {
@@ -33,21 +38,27 @@ function Timer() {
       <label>
         Elapsed Time
         <progress value={time} max={duration} />
-        <time>{(time / 1000).toFixed(1)}s</time>
+        <time>{nf.format(time / 1000)}</time>
       </label>
       <label>
         Duration
         <input
           type="range"
           value={duration}
-          max={MAX_DURATION}
-          data-tooltip={`${(duration / 1000).toFixed(1)}s`}
+          max={maxDuration}
+          data-tooltip={nf.format(duration / 1000)}
           onChange={(e) => setDuration(e.currentTarget.valueAsNumber)}
         />
       </label>
       <button type="reset" className="secondary outline">
         Reset
       </button>
+
+      <style jsx>{`
+        form {
+          font-variant-numeric: tabular-nums;
+        }
+      `}</style>
     </form>
   )
 }
