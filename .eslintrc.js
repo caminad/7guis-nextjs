@@ -10,6 +10,9 @@ const eslintrc = {
   parserOptions: {
     project: './tsconfig.json',
   },
+  rules: {
+    '@typescript-eslint/no-non-null-assertion': 'off',
+  },
 }
 
 module.exports = eslintrc

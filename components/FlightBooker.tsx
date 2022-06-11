@@ -39,9 +39,7 @@ function DateInput(props: {
   const [invalid, setInvalid] = useState<boolean>()
 
   useEffect(() => {
-    if (ref.current) {
-      setInvalid(!ref.current.checkValidity())
-    }
+    setInvalid(!ref.current!.checkValidity())
   }, [props.min, props.value])
 
   return (
@@ -75,9 +73,7 @@ function FlightBooker() {
 
   useEffect(() => {
     setMessage('')
-    if (formRef.current) {
-      setInvalid(!formRef.current.checkValidity())
-    }
+    setInvalid(!formRef.current!.checkValidity())
   }, [returnEnabled, startDate, returnDate])
 
   return (

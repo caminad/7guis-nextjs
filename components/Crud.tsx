@@ -35,10 +35,8 @@ export default function Crud() {
   const ref = useRef<HTMLFormElement>(null)
 
   useEffect(() => {
-    if (ref.current) {
-      const data = new FormData(ref.current)
-      setHasSelection(data.has('selected'))
-    }
+    const data = new FormData(ref.current!)
+    setHasSelection(data.has('selected'))
   }, [filter, names])
 
   const filteredNames = useMemo(() => {
@@ -98,8 +96,8 @@ export default function Crud() {
           type="button"
           disabled={!hasSelection}
           onClick={(e) => {
-            if (e.currentTarget.form?.reportValidity()) {
-              const data = new FormData(e.currentTarget.form)
+            if (e.currentTarget.form!.reportValidity()) {
+              const data = new FormData(e.currentTarget.form!)
               dispatch(['update', data])
             }
           }}
@@ -111,10 +109,8 @@ export default function Crud() {
           type="button"
           disabled={!hasSelection}
           onClick={(e) => {
-            if (e.currentTarget.form) {
-              const data = new FormData(e.currentTarget.form)
-              dispatch(['delete', data])
-            }
+            const data = new FormData(e.currentTarget.form!)
+            dispatch(['delete', data])
           }}
           className="contrast outline"
         >
