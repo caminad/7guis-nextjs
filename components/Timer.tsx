@@ -1,58 +1,39 @@
-import {
-  DispatchWithoutAction,
-  useCallback,
-  useEffect,
-  useReducer,
-  useState,
-} from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const INITIAL_DURATION = 30_000
 const MAX_DURATION = 60_000
 
-function useElapsedTime(
-  duration: number
-): [time: number, reset: DispatchWithoutAction] {
-  const [time, dispatch] = useReducer((t: number, dt: number | null) => {
-    if (dt === null) {
-      return 0
-    }
-    // Referencing duration technically makes this reducer impure, but it feels
-    // slightly clearer to do it this way than use a ref.
-    return Math.min(t + dt, duration)
-  }, 0)
-
+function useAnimationEffect(effect: (delta: number) => void) {
+  const effectRef = useRef(effect)
   useEffect(() => {
-    let prev = performance.now()
-    let handle = requestAnimationFrame(function cb(curr) {
-      // Guarantee that time is monotonic; the time given by performance.now()
-      // may be slightly later than the timestamp cb() is first invoked with.
-      const delta = Math.max(curr - prev, 0)
-
-      dispatch(delta)
-
-      prev = curr
-      handle = requestAnimationFrame(cb)
+    effectRef.current = effect
+  })
+  useEffect(() => {
+    let handle = requestAnimationFrame(function (t0) {
+      handle = requestAnimationFrame(function cb(t1) {
+        effectRef.current(t1 - t0)
+        t0 = t1
+        handle = requestAnimationFrame(cb)
+      })
     })
     return () => cancelAnimationFrame(handle)
   }, [])
-
-  return [time, useCallback(() => dispatch(null), [])]
-}
-
-function Time(props: { value: number }) {
-  return <time>{(props.value / 1000).toFixed(1)}s</time>
 }
 
 function Timer() {
   const [duration, setDuration] = useState(INITIAL_DURATION)
-  const [time, reset] = useElapsedTime(duration)
+  const [time, setTime] = useState(0)
+
+  useAnimationEffect((delta) => {
+    setTime((t) => Math.min(t + delta, duration))
+  })
 
   return (
-    <form onReset={reset}>
+    <form onReset={() => setTime(0)}>
       <label>
         Elapsed Time
         <progress value={time} max={duration} />
-        <Time value={time} />
+        <time>{(time / 1000).toFixed(1)}s</time>
       </label>
       <label>
         Duration
