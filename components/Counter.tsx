@@ -7,7 +7,7 @@ function Counter() {
   }, 0)
   return (
     <form onSubmit={handleSubmit} className="grid">
-      <input type="number" name="count" value={count} readOnly />
+      <input type="number" value={count} readOnly aria-label="Count" />
       <button type="submit">Count</button>
     </form>
   )
