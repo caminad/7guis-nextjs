@@ -1,10 +1,4 @@
-import {
-  Dispatch,
-  DispatchWithoutAction,
-  useMemo,
-  useReducer,
-  useState,
-} from 'react'
+import { Dispatch, DispatchWithoutAction, useReducer } from 'react'
 
 export default function CircleDrawer() {
   const [state, dispatch] = useReducer(reducer, initialState)
@@ -29,8 +23,8 @@ export default function CircleDrawer() {
 }
 
 function UndoButton(props: {
-  onUndo: DispatchWithoutAction
   disabled: boolean
+  onUndo: DispatchWithoutAction
 }) {
   return (
     <button
@@ -45,8 +39,8 @@ function UndoButton(props: {
 }
 
 function RedoButton(props: {
-  onRedo: DispatchWithoutAction
   disabled: boolean
+  onRedo: DispatchWithoutAction
 }) {
   return (
     <button
@@ -64,10 +58,6 @@ function Canvas(props: {
   circles: readonly Circle[]
   onAdd: Dispatch<Circle>
 }) {
-  const [mouse, setMouse] = useState(() => Point(0, 0))
-  const circleUnderMouse = useMemo(() => {
-    return findLast(props.circles, (c) => contains(c, mouse))
-  }, [mouse, props.circles])
   return (
     <svg
       width="100%"
@@ -76,16 +66,6 @@ function Canvas(props: {
         const rect = e.currentTarget.getBoundingClientRect()
         props.onAdd(Circle(e.clientX - rect.x, e.clientY - rect.y))
       }}
-      onContextMenu={(e) => {
-        if (circleUnderMouse) {
-          e.preventDefault()
-          props.onAdd(grow(circleUnderMouse))
-        }
-      }}
-      onMouseMove={(e) => {
-        const rect = e.currentTarget.getBoundingClientRect()
-        setMouse(Point(e.clientX - rect.x, e.clientY - rect.y))
-      }}
     >
       {deduplicate(props.circles).map((circle) => (
         <circle
@@ -93,16 +73,28 @@ function Canvas(props: {
           cx={circle.cx}
           cy={circle.cy}
           r={circle.r}
-          stroke="currentColor"
-          fill={circle === circleUnderMouse ? 'solid' : 'none'}
+          onContextMenu={(e) => {
+            e.preventDefault()
+            props.onAdd(grow(circle, 1))
+          }}
         />
       ))}
 
       <style jsx>{`
         svg {
-          color: lightgray;
-          border: 1px solid currentColor;
+          color: var(--secondary);
+          background-color: var(--secondary-inverse);
+          border: 1px solid;
           cursor: crosshair;
+        }
+
+        circle {
+          stroke: currentColor;
+          fill: transparent;
+        }
+
+        circle:hover {
+          fill: var(--primary-focus);
         }
       `}</style>
     </svg>
@@ -158,14 +150,6 @@ function reducer(
   }
 }
 
-interface Point {
-  readonly x: number
-  readonly y: number
-}
-function Point(x: number, y: number): Point {
-  return { x, y }
-}
-
 interface Circle {
   readonly key: string
   readonly cx: number
@@ -176,14 +160,8 @@ function Circle(cx: number, cy: number, r = 20): Circle {
   return { key: `${cx},${cy}`, cx, cy, r }
 }
 
-function grow(circle: Circle): Circle {
-  return Circle(circle.cx, circle.cy, circle.r + 1)
-}
-
-function contains(circle: Circle, point: Point): boolean {
-  const dx = circle.cx - point.x
-  const dy = circle.cy - point.y
-  return dx * dx + dy * dy <= circle.r * circle.r
+function grow<T extends { r: number }>(shape: T, dr: number): T {
+  return { ...shape, r: shape.r + dr }
 }
 
 function deduplicate<T extends { key: unknown }>(items: readonly T[]): T[] {
@@ -192,15 +170,4 @@ function deduplicate<T extends { key: unknown }>(items: readonly T[]): T[] {
     m.set(item.key, item)
   }
   return Array.from(m.values())
-}
-
-function findLast<T>(
-  items: readonly T[],
-  pred: (item: T) => boolean
-): T | undefined {
-  for (let index = items.length - 1; index >= 0; index--) {
-    if (pred(items[index])) {
-      return items[index]
-    }
-  }
 }
