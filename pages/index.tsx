@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import CircleDrawer from '../components/CircleDrawer'
 import Counter from '../components/Counter'
 import Crud from '../components/Crud'
 import FlightBooker from '../components/FlightBooker'
@@ -81,6 +82,16 @@ const Home: NextPage = () => {
           <p>
             <ExtLink href="https://eugenkiss.github.io/7guis/tasks#crud">
               CRUD task
+            </ExtLink>
+          </p>
+        </section>
+
+        <section id="circle">
+          <h2>Circle Drawer</h2>
+          <CircleDrawer />
+          <p>
+            <ExtLink href="https://eugenkiss.github.io/7guis/tasks#circle">
+              Circle Drawer task
             </ExtLink>
           </p>
         </section>
