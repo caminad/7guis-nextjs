@@ -82,6 +82,7 @@ function Canvas(props: {
 
       <style jsx>{`
         svg {
+          aspect-ratio: 2/1;
           color: var(--secondary);
           background-color: var(--secondary-inverse);
           border: 1px solid;
