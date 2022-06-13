@@ -1,31 +1,6 @@
 import { useEffect, useMemo, useReducer, useRef, useState } from 'react'
-
-const initialState: readonly string[] = [
-  'Emil, Hans',
-  'Mustermann, Max',
-  'Tisch, Roman',
-]
-
-function reducer(
-  state: readonly string[],
-  [type, data]: [type: 'create' | 'update' | 'delete', data: FormData]
-) {
-  if (type === 'update' || type === 'delete') {
-    const selected = data.get('selected')
-    if (selected) {
-      state = state.filter((x) => x !== selected)
-    }
-  }
-  if (type === 'create' || type === 'update') {
-    const name = [data.get('surname'), data.get('name')]
-      .filter(Boolean)
-      .join(', ')
-    if (name) {
-      state = [...new Set(state).add(name)]
-    }
-  }
-  return state
-}
+import { Action } from '../lib/action'
+import { initialState, reducer } from './Crud/state'
 
 export default function Crud() {
   const [names, dispatch] = useReducer(reducer, initialState)
@@ -55,7 +30,7 @@ export default function Crud() {
       onSubmit={(e) => {
         e.preventDefault()
         const data = new FormData(e.currentTarget)
-        dispatch(['create', data])
+        dispatch(Action('create', data))
       }}
     >
       <div className="grid">
@@ -98,7 +73,7 @@ export default function Crud() {
           onClick={(e) => {
             if (e.currentTarget.form!.reportValidity()) {
               const data = new FormData(e.currentTarget.form!)
-              dispatch(['update', data])
+              dispatch(Action('update', data))
             }
           }}
           className="outline"
@@ -110,7 +85,7 @@ export default function Crud() {
           disabled={!hasSelection}
           onClick={(e) => {
             const data = new FormData(e.currentTarget.form!)
-            dispatch(['delete', data])
+            dispatch(Action('delete', data))
           }}
           className="contrast outline"
         >

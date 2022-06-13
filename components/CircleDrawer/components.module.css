@@ -1,0 +1,16 @@
+.Canvas {
+  aspect-ratio: 2/1;
+  color: var(--secondary);
+  background-color: var(--secondary-inverse);
+  border: 1px solid;
+  cursor: crosshair;
+}
+
+.Canvas circle {
+  stroke: currentColor;
+  fill: transparent;
+}
+
+.Canvas circle:hover {
+  fill: var(--primary-focus);
+}

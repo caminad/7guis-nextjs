@@ -1,4 +1,3 @@
-import type { NextPage } from 'next'
 import Head from 'next/head'
 import CircleDrawer from '../components/CircleDrawer'
 import Counter from '../components/Counter'
@@ -15,7 +14,7 @@ function ExtLink(props: { href: string; children: React.ReactNode }) {
   )
 }
 
-const Home: NextPage = () => {
+export default function Home() {
   return (
     <>
       <Head>
@@ -107,5 +106,3 @@ const Home: NextPage = () => {
     </>
   )
 }
-
-export default Home

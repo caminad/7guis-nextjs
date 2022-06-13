@@ -1,4 +1,5 @@
-import { Dispatch, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { DateInput, SwitchInput } from './FlightBooker/components'
 
 function processBooking(data: FormData) {
   const dates = {
@@ -14,51 +15,7 @@ function processBooking(data: FormData) {
   return `Booking a return flight from ${dates.start} to ${dates.return}`
 }
 
-function SwitchInput(props: {
-  defaultChecked: boolean
-  onChange: Dispatch<boolean>
-}) {
-  return (
-    <input
-      type="checkbox"
-      role="switch"
-      defaultChecked={props.defaultChecked}
-      onChange={(e) => props.onChange(e.currentTarget.checked)}
-    />
-  )
-}
-
-function DateInput(props: {
-  name: string
-  disabled?: boolean
-  min: string
-  value: string
-  onChange: Dispatch<string>
-}) {
-  const ref = useRef<HTMLInputElement>(null)
-  const [invalid, setInvalid] = useState<boolean>()
-
-  useEffect(() => {
-    setInvalid(!ref.current!.checkValidity())
-  }, [props.min, props.value])
-
-  return (
-    <input
-      ref={ref}
-      type="date"
-      required
-      aria-invalid={invalid ? 'true' : undefined}
-      name={props.name}
-      disabled={props.disabled}
-      min={props.min}
-      value={props.value}
-      onChange={(e) => props.onChange(e.currentTarget.value)}
-      onInvalid={() => setInvalid(true)}
-    />
-  )
-}
-
-function FlightBooker() {
+export default function FlightBooker() {
   const [today] = useState(() => {
     return new Date().toISOString().split('T')[0]
   })
@@ -120,5 +77,3 @@ function FlightBooker() {
     </form>
   )
 }
-
-export default FlightBooker

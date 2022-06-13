@@ -1,6 +1,6 @@
 import { FormEvent, useReducer } from 'react'
 
-function Counter() {
+export default function Counter() {
   const [count, handleSubmit] = useReducer((state: number, e: FormEvent) => {
     e.preventDefault()
     return state + 1
@@ -12,5 +12,3 @@ function Counter() {
     </form>
   )
 }
-
-export default Counter

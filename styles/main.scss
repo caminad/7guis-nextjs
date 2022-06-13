@@ -5,3 +5,7 @@ $primary-hue: 330;
 @import '@picocss/pico/scss/pico';
 
 @import './sectioning';
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
