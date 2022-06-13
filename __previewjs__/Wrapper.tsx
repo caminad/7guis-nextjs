@@ -1,5 +1,8 @@
 import '../styles/main.scss'
 
-export function Wrapper(props: { children: React.ReactNode }) {
+interface WrapperProps {
+  readonly children: React.ReactNode
+}
+export function Wrapper(props: WrapperProps) {
   return <main>{props.children}</main>
 }

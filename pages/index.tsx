@@ -6,13 +6,7 @@ import FlightBooker from '../components/FlightBooker'
 import TemperatureConverter from '../components/TemperatureConverter'
 import Timer from '../components/Timer'
 
-function ExtLink(props: { href: string; children: React.ReactNode }) {
-  return (
-    <a href={props.href} target="_blank" rel="noreferrer">
-      {props.children}
-    </a>
-  )
-}
+const ext = { target: '_blank', rel: 'noreferrer' } as const
 
 export default function Home() {
   return (
@@ -28,10 +22,17 @@ export default function Home() {
       <main>
         <header>
           <h1>
-            <ExtLink href="https://eugenkiss.github.io/7guis/">7GUIs</ExtLink>{' '}
+            <a href="https://eugenkiss.github.io/7guis/" {...ext}>
+              7GUIs
+            </a>{' '}
             tasks built with{' '}
-            <ExtLink href="https://nextjs.org">Next.js</ExtLink> and{' '}
-            <ExtLink href="https://picocss.com">Pico.css</ExtLink>
+            <a href="https://nextjs.org" {...ext}>
+              Next.js
+            </a>{' '}
+            and{' '}
+            <a href="https://picocss.com" {...ext}>
+              Pico.css
+            </a>
           </h1>
         </header>
 
@@ -39,9 +40,9 @@ export default function Home() {
           <h2>Counter</h2>
           <Counter />
           <p>
-            <ExtLink href="https://eugenkiss.github.io/7guis/tasks#counter">
+            <a href="https://eugenkiss.github.io/7guis/tasks#counter" {...ext}>
               Counter task
-            </ExtLink>
+            </a>
           </p>
         </section>
 
@@ -49,9 +50,9 @@ export default function Home() {
           <h2>Temperature Converter</h2>
           <TemperatureConverter />
           <p>
-            <ExtLink href="https://eugenkiss.github.io/7guis/tasks#temp">
+            <a href="https://eugenkiss.github.io/7guis/tasks#temp" {...ext}>
               Temperature Converter task
-            </ExtLink>
+            </a>
           </p>
         </section>
 
@@ -59,9 +60,9 @@ export default function Home() {
           <h2>Flight Booker</h2>
           <FlightBooker />
           <p>
-            <ExtLink href="https://eugenkiss.github.io/7guis/tasks#flight">
+            <a href="https://eugenkiss.github.io/7guis/tasks#flight" {...ext}>
               Flight Booker task
-            </ExtLink>
+            </a>
           </p>
         </section>
 
@@ -69,9 +70,9 @@ export default function Home() {
           <h2>Timer</h2>
           <Timer />
           <p>
-            <ExtLink href="https://eugenkiss.github.io/7guis/tasks#timer">
+            <a href="https://eugenkiss.github.io/7guis/tasks#timer" {...ext}>
               Timer task
-            </ExtLink>
+            </a>
           </p>
         </section>
 
@@ -79,9 +80,9 @@ export default function Home() {
           <h2>CRUD</h2>
           <Crud />
           <p>
-            <ExtLink href="https://eugenkiss.github.io/7guis/tasks#crud">
+            <a href="https://eugenkiss.github.io/7guis/tasks#crud" {...ext}>
               CRUD task
-            </ExtLink>
+            </a>
           </p>
         </section>
 
@@ -89,18 +90,18 @@ export default function Home() {
           <h2>Circle Drawer</h2>
           <CircleDrawer />
           <p>
-            <ExtLink href="https://eugenkiss.github.io/7guis/tasks#circle">
+            <a href="https://eugenkiss.github.io/7guis/tasks#circle" {...ext}>
               Circle Drawer task
-            </ExtLink>
+            </a>
           </p>
         </section>
       </main>
 
       <footer>
         <p>
-          <ExtLink href="https://github.com/caminad/7guis-nextjs">
+          <a href="https://github.com/caminad/7guis-nextjs" {...ext}>
             Source code
-          </ExtLink>
+          </a>
         </p>
       </footer>
     </>

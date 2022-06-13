@@ -1,10 +1,12 @@
+const DEFAULT_R = 10
+
 export interface Circle {
   readonly key: string
   readonly cx: number
   readonly cy: number
   readonly r: number
 }
-export function Circle(cx: number, cy: number, r = 20): Circle {
+export function Circle(cx: number, cy: number, r = DEFAULT_R): Circle {
   return { key: `${cx},${cy}`, cx, cy, r }
 }
 

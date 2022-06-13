@@ -1,10 +1,11 @@
 import type { Dispatch } from 'react'
 
-export function TemperatureInput(props: {
-  placeholder: string
-  value: string
-  onChange: Dispatch<string>
-}) {
+interface TemperatureInputProps {
+  readonly placeholder: string
+  readonly value: string
+  readonly onChange: Dispatch<string>
+}
+export function TemperatureInput(props: TemperatureInputProps) {
   return (
     <input
       type="number"

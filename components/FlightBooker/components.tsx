@@ -1,9 +1,10 @@
 import { Dispatch, useEffect, useRef, useState } from 'react'
 
-export function SwitchInput(props: {
-  defaultChecked: boolean
-  onChange: Dispatch<boolean>
-}) {
+interface SwitchInputProps {
+  readonly defaultChecked: boolean
+  readonly onChange: Dispatch<boolean>
+}
+export function SwitchInput(props: SwitchInputProps) {
   return (
     <input
       type="checkbox"
@@ -13,13 +14,15 @@ export function SwitchInput(props: {
     />
   )
 }
-export function DateInput(props: {
-  name: string
-  disabled?: boolean
-  min: string
-  value: string
-  onChange: Dispatch<string>
-}) {
+
+interface DateInputProps {
+  readonly name: string
+  readonly disabled?: boolean
+  readonly min: string
+  readonly value: string
+  readonly onChange: Dispatch<string>
+}
+export function DateInput(props: DateInputProps) {
   const ref = useRef<HTMLInputElement>(null)
   const [invalid, setInvalid] = useState<boolean>()
 

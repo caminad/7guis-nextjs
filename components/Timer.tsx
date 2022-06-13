@@ -2,14 +2,17 @@ import { useState } from 'react'
 import { DurationInput, TimeProgress } from './Timer/components'
 import { useAnimationEffect } from './Timer/hooks'
 
-export default function Timer({
-  initialDuration = 30_000,
-  maxDuration = 60_000,
-}: {
-  initialDuration?: number
-  maxDuration?: number
-}) {
-  const [duration, setDuration] = useState(initialDuration)
+const DEFAULT_INITIAL_DURATION = 30_000
+const DEFAULT_MAX_DURATION = 60_000
+
+interface TimerProps {
+  readonly initialDuration?: number
+  readonly maxDuration?: number
+}
+export default function Timer(props: TimerProps) {
+  const [duration, setDuration] = useState(
+    props.initialDuration ?? DEFAULT_INITIAL_DURATION
+  )
   const [time, setTime] = useState(0)
 
   useAnimationEffect((delta) => {
@@ -25,7 +28,7 @@ export default function Timer({
       <label>
         Duration
         <DurationInput
-          max={maxDuration}
+          max={props.maxDuration ?? DEFAULT_MAX_DURATION}
           value={duration}
           onChange={setDuration}
         />

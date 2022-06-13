@@ -8,11 +8,12 @@ const nf = new Intl.NumberFormat(undefined, {
   maximumFractionDigits: 2,
 })
 
-export function DurationInput(props: {
-  value: number
-  max: number
-  onChange: Dispatch<number>
-}) {
+interface DurationInputProps {
+  readonly value: number
+  readonly max: number
+  readonly onChange: Dispatch<number>
+}
+export function DurationInput(props: DurationInputProps) {
   return (
     <input
       type="range"
@@ -25,7 +26,11 @@ export function DurationInput(props: {
   )
 }
 
-export function TimeProgress(props: { value: number; max: number }) {
+interface TimeProgressProps {
+  readonly value: number
+  readonly max: number
+}
+export function TimeProgress(props: TimeProgressProps) {
   return (
     <fieldset className="tabular-nums">
       <progress value={props.value} max={props.max} />

@@ -2,10 +2,11 @@ import type { Dispatch, DispatchWithoutAction } from 'react'
 import styles from './components.module.css'
 import { Circle, deduplicateCircles, growCircle } from './models'
 
-export function UndoButton(props: {
-  disabled: boolean
-  onUndo: DispatchWithoutAction
-}) {
+interface UndoButtonProps {
+  readonly disabled: boolean
+  readonly onUndo: DispatchWithoutAction
+}
+export function UndoButton(props: UndoButtonProps) {
   return (
     <button
       type="button"
@@ -17,10 +18,11 @@ export function UndoButton(props: {
     </button>
   )
 }
-export function RedoButton(props: {
-  disabled: boolean
-  onRedo: DispatchWithoutAction
-}) {
+interface RedoButtonProps {
+  readonly disabled: boolean
+  readonly onRedo: DispatchWithoutAction
+}
+export function RedoButton(props: RedoButtonProps) {
   return (
     <button
       type="button"
@@ -33,10 +35,11 @@ export function RedoButton(props: {
   )
 }
 
-export function Canvas(props: {
-  circles: readonly Circle[]
-  onAdd: Dispatch<Circle>
-}) {
+interface CanvasProps {
+  readonly circles: readonly Circle[]
+  readonly onAdd: Dispatch<Circle>
+}
+export function Canvas(props: CanvasProps) {
   return (
     <svg
       width="100%"
