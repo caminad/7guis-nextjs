@@ -1,4 +1,5 @@
 import type { Dispatch } from 'react'
+import { DEFAULT_MAX_DURATION } from './constants'
 
 const nf = new Intl.NumberFormat(undefined, {
   style: 'unit',
@@ -10,7 +11,7 @@ const nf = new Intl.NumberFormat(undefined, {
 
 interface DurationInputProps {
   readonly value: number
-  readonly max: number
+  readonly max: number | undefined
   readonly onChange: Dispatch<number>
 }
 export function DurationInput(props: DurationInputProps) {
@@ -18,7 +19,7 @@ export function DurationInput(props: DurationInputProps) {
     <input
       type="range"
       value={props.value}
-      max={props.max}
+      max={props.max ?? DEFAULT_MAX_DURATION}
       data-tooltip={nf.format(props.value / 1000)}
       onChange={(e) => props.onChange(e.currentTarget.valueAsNumber)}
       className="tabular-nums"
