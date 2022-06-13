@@ -1,4 +1,5 @@
-import { Dispatch, useEffect, useRef, useState } from 'react'
+import type { Dispatch } from 'react'
+import { toISODateString } from './models'
 
 interface SwitchInputProps {
   readonly defaultChecked: boolean
@@ -18,30 +19,25 @@ export function SwitchInput(props: SwitchInputProps) {
 interface DateInputProps {
   readonly name: string
   readonly disabled?: boolean
-  readonly min: string
-  readonly value: string
-  readonly onChange: Dispatch<string>
+  readonly min: Date
+  readonly max: Date
+  readonly value: Date
+  readonly onChange: Dispatch<Date>
 }
 export function DateInput(props: DateInputProps) {
-  const ref = useRef<HTMLInputElement>(null)
-  const [invalid, setInvalid] = useState<boolean>()
-
-  useEffect(() => {
-    setInvalid(!ref.current!.checkValidity())
-  }, [props.min, props.value])
-
   return (
     <input
-      ref={ref}
       type="date"
       required
-      aria-invalid={invalid ? 'true' : undefined}
       name={props.name}
       disabled={props.disabled}
-      min={props.min}
-      value={props.value}
-      onChange={(e) => props.onChange(e.currentTarget.value)}
-      onInvalid={() => setInvalid(true)}
+      min={toISODateString(props.min)}
+      max={toISODateString(props.max)}
+      value={toISODateString(props.value)}
+      onChange={(e) => {
+        const value = e.currentTarget.valueAsDate
+        if (value) props.onChange(value)
+      }}
     />
   )
 }
