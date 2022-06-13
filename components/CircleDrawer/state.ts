@@ -1,15 +1,18 @@
-import type { Action, ActionWithoutPayload } from '../../lib/action'
+import type { Action } from '../../lib/action'
 import type { Circle } from './models'
 
 interface State {
   readonly circles: readonly Circle[]
   readonly undo: readonly Circle[]
 }
-export const initialState: State = { circles: [], undo: [] }
+export const initialState: State = {
+  circles: [],
+  undo: [],
+}
 
 export function reducer(
   state: State,
-  action: Action<'add', Circle> | ActionWithoutPayload<'undo' | 'redo'>
+  action: Action<'add', Circle> | Action<'undo' | 'redo'>
 ): State {
   switch (action.type) {
     case 'add':
