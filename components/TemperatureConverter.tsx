@@ -1,41 +1,27 @@
-import { useState } from 'react'
-import {
-  celsiusToFahrenheit,
-  fahrenheitToCelsius,
-} from './TemperatureConverter/utils'
+import { useReducer } from 'react'
+import { Action } from '../lib/action'
+import { TemperatureInput } from './TemperatureConverter/components'
+import { initialState, reducer } from './TemperatureConverter/state'
 
 export default function TemperatureConverter() {
-  const [celsius, setCelsius] = useState('')
-  const [fahrenheit, setFahrenheit] = useState('')
+  const [state, dispatch] = useReducer(reducer, initialState)
 
   return (
     <form className="grid">
       <label>
         Celsius
-        <input
-          type="number"
-          inputMode="decimal"
+        <TemperatureInput
           placeholder="Temperature in °C"
-          value={celsius}
-          onChange={(e) => {
-            const celsius = e.currentTarget.value
-            setCelsius(celsius)
-            setFahrenheit(celsiusToFahrenheit(celsius))
-          }}
+          value={state.celsius}
+          onChange={(value) => dispatch(Action('celsius', value))}
         />
       </label>
       <label>
         Fahrenheit
-        <input
-          type="number"
-          inputMode="decimal"
+        <TemperatureInput
           placeholder="Temperature in °F"
-          value={fahrenheit}
-          onChange={(e) => {
-            const fahrenheit = e.currentTarget.value
-            setFahrenheit(fahrenheit)
-            setCelsius(fahrenheitToCelsius(fahrenheit))
-          }}
+          value={state.fahrenheit}
+          onChange={(value) => dispatch(Action('fahrenheit', value))}
         />
       </label>
     </form>
