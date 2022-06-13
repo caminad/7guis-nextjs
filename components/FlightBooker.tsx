@@ -51,25 +51,27 @@ export default function FlightBooker() {
           Return flight
         </label>
       </fieldset>
-      <label>
-        Start date
-        <DateInput
-          name="start"
-          min={today}
-          value={startDate}
-          onChange={setStartDate}
-        />
-      </label>
-      <label>
-        Return date
-        <DateInput
-          name="return"
-          disabled={!returnEnabled}
-          min={startDate}
-          value={returnDate}
-          onChange={setReturnDate}
-        />
-      </label>
+      <div className="grid">
+        <label>
+          Start date
+          <DateInput
+            name="start"
+            min={today}
+            value={startDate}
+            onChange={setStartDate}
+          />
+        </label>
+        <label>
+          Return date
+          <DateInput
+            name="return"
+            disabled={!returnEnabled}
+            min={startDate}
+            value={returnDate}
+            onChange={setReturnDate}
+          />
+        </label>
+      </div>
       <button type="submit" disabled={invalid}>
         Book
       </button>
