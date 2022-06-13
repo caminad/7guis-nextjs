@@ -11,7 +11,7 @@ interface TimerProps {
 export default function Timer(props: TimerProps) {
   const [state, dispatch] = useReducer(reducer, props.initialDuration, init)
 
-  useAnimationEffect((delta) => dispatch(Action('time', delta)))
+  useAnimationEffect((delta) => dispatch(Action('add_time', delta)))
 
   return (
     <form onReset={() => dispatch(Action('reset'))}>

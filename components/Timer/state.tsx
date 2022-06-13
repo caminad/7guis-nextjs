@@ -9,15 +9,23 @@ export function init(duration = DEFAULT_INITIAL_DURATION): State {
   return { time: 0, duration }
 }
 
+function fixTime(state: State): State {
+  return { ...state, time: Math.min(state.time, state.duration) }
+}
+
 export function reducer(
   state: State,
-  action: Action<'time' | 'duration', number> | Action<'reset'>
+  action: Action<'add_time' | 'duration', number> | Action<'reset'>
 ): State {
   switch (action.type) {
-    case 'time':
-      return { ...state, time: action.payload }
+    case 'add_time':
+      if (state.time === state.duration) {
+        // Bail early to avoid a rerender.
+        return state
+      }
+      return fixTime({ ...state, time: state.time + action.payload })
     case 'duration':
-      return { ...state, duration: action.payload }
+      return fixTime({ ...state, duration: action.payload })
     case 'reset':
       return init(state.duration)
     default:
