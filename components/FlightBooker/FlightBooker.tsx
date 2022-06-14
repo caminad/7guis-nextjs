@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useState } from 'react'
-import { Action } from '../lib/action'
-import { DateInput, SwitchInput } from './FlightBooker/components'
-import { init, reducer } from './FlightBooker/state'
+import { Action } from '../../lib/action'
+import { DateInput, SwitchInput } from './components'
+import { reducer, State } from './state'
 
 function processBooking(data: FormData) {
   const dates = {
@@ -15,7 +15,7 @@ function processBooking(data: FormData) {
 }
 
 export default function FlightBooker() {
-  const [state, dispatch] = useReducer(reducer, undefined, init)
+  const [state, dispatch] = useReducer(reducer, undefined, State)
   const [message, setMessage] = useState('')
 
   useEffect(() => setMessage(''), [state])

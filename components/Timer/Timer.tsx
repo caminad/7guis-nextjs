@@ -1,15 +1,15 @@
 import { useReducer } from 'react'
-import { Action } from '../lib/action'
-import { DurationInput, TimeProgress } from './Timer/components'
-import { useAnimationEffect } from './Timer/hooks'
-import { init, reducer } from './Timer/state'
+import { Action } from '../../lib/action'
+import { DurationInput, TimeProgress } from './components'
+import { useAnimationEffect } from './hooks'
+import { reducer, State } from './state'
 
 interface TimerProps {
   readonly initialDuration?: number
   readonly maxDuration?: number
 }
 export default function Timer(props: TimerProps) {
-  const [state, dispatch] = useReducer(reducer, props.initialDuration, init)
+  const [state, dispatch] = useReducer(reducer, props.initialDuration, State)
 
   useAnimationEffect((delta) => dispatch(Action('add_time', delta)))
 

@@ -1,14 +1,14 @@
 import type { Action } from '../../lib/action'
 import { addYears, clampDate } from './models'
 
-interface State {
+export interface State {
   readonly min: Date
   readonly max: Date
   readonly start: Date
   readonly return: Date
   readonly returnEnabled: boolean
 }
-export function init(today = new Date()): State {
+export function State(today = new Date()): State {
   return {
     min: addYears(today, -1),
     max: addYears(today, 10),

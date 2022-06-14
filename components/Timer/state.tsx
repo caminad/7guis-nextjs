@@ -1,12 +1,15 @@
 import type { Action } from '../../lib/action'
 import { DEFAULT_INITIAL_DURATION } from './constants'
 
-interface State {
+export interface State {
   readonly time: number
   readonly duration: number
 }
-export function init(duration = DEFAULT_INITIAL_DURATION): State {
-  return { time: 0, duration }
+export function State(duration = DEFAULT_INITIAL_DURATION): State {
+  return {
+    time: 0,
+    duration,
+  }
 }
 
 function fixTime(state: State): State {
@@ -27,7 +30,7 @@ export function reducer(
     case 'duration':
       return fixTime({ ...state, duration: action.payload })
     case 'reset':
-      return init(state.duration)
+      return State(state.duration)
     default:
       return state
   }

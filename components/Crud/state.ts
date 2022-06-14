@@ -1,11 +1,13 @@
 import type { Action } from '../../lib/action'
 
-type State = readonly string[]
-export const initialState: State = [
-  'Emil, Hans',
-  'Mustermann, Max',
-  'Tisch, Roman',
-]
+export interface State {
+  readonly names: readonly string[]
+}
+export function State(names: Iterable<string> = []): State {
+  return {
+    names: Array.from(names),
+  }
+}
 
 export function reducer(
   state: State,
@@ -14,7 +16,7 @@ export function reducer(
   if (action.type === 'update' || action.type === 'delete') {
     const selected = action.payload.get('selected')
     if (selected) {
-      state = state.filter((x) => x !== selected)
+      state = { names: state.names.filter((x) => x !== selected) }
     }
   }
   if (action.type === 'create' || action.type === 'update') {
@@ -22,7 +24,7 @@ export function reducer(
       .filter(Boolean)
       .join(', ')
     if (name) {
-      state = [...new Set(state).add(name)]
+      state = { names: [...new Set(state.names).add(name)] }
     }
   }
   return state

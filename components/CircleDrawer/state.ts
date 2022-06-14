@@ -1,13 +1,15 @@
 import type { Action } from '../../lib/action'
 import type { Circle } from './models'
 
-interface State {
+export interface State {
   readonly circles: readonly Circle[]
   readonly undo: readonly Circle[]
 }
-export const initialState: State = {
-  circles: [],
-  undo: [],
+export function State(): State {
+  return {
+    circles: [],
+    undo: [],
+  }
 }
 
 export function reducer(

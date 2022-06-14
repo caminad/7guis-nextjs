@@ -1,11 +1,10 @@
 import { useReducer } from 'react'
-import { Action } from '../lib/action'
-import { TemperatureInput } from './TemperatureConverter/components'
-import { initialState, reducer } from './TemperatureConverter/state'
+import { Action } from '../../lib/action'
+import { TemperatureInput } from './components'
+import { reducer, State } from './state'
 
 export default function TemperatureConverter() {
-  const [state, dispatch] = useReducer(reducer, initialState)
-
+  const [state, dispatch] = useReducer(reducer, undefined, State)
   return (
     <form className="grid">
       <label>

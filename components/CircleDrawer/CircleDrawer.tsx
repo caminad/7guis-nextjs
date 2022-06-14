@@ -1,10 +1,10 @@
 import { useReducer } from 'react'
-import { Action } from '../lib/action'
-import { Canvas, RedoButton, UndoButton } from './CircleDrawer/components'
-import { initialState, reducer } from './CircleDrawer/state'
+import { Action } from '../../lib/action'
+import { Canvas, RedoButton, UndoButton } from './components'
+import { reducer, State } from './state'
 
 export default function CircleDrawer() {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, undefined, State)
   return (
     <form>
       <div className="grid">

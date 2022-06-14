@@ -1,10 +1,10 @@
 import Head from 'next/head'
-import CircleDrawer from '../components/CircleDrawer'
-import Counter from '../components/Counter'
-import Crud from '../components/Crud'
-import FlightBooker from '../components/FlightBooker'
-import TemperatureConverter from '../components/TemperatureConverter'
-import Timer from '../components/Timer'
+import CircleDrawer from '../components/CircleDrawer/CircleDrawer'
+import Counter from '../components/Counter/Counter'
+import Crud from '../components/Crud/Crud'
+import FlightBooker from '../components/FlightBooker/FlightBooker'
+import TemperatureConverter from '../components/TemperatureConverter/TemperatureConverter'
+import Timer from '../components/Timer/Timer'
 
 const ext = { target: '_blank', rel: 'noreferrer' } as const
 
