@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useReducer, useRef, useState } from 'react'
+import { useEffect, useReducer, useRef, useState } from 'react'
 import { Action } from '../../lib/action'
 import { reducer, State } from './state'
 
@@ -14,11 +14,9 @@ export default function Crud() {
     setHasSelection(data.has('selected'))
   }, [filter, state])
 
-  const filteredNames = useMemo(() => {
-    return Array.from(state.names)
-      .filter((n) => n.toLowerCase().startsWith(filter))
-      .sort()
-  }, [filter, state])
+  const filteredNames = Array.from(state.names)
+    .filter((n) => n.toLowerCase().startsWith(filter))
+    .sort()
 
   return (
     <form
