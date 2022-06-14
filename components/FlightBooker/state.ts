@@ -8,9 +8,10 @@ export interface State {
   readonly return: Date
   readonly returnEnabled: boolean
 }
-export function State(today = new Date()): State {
+export function State(today: number | Date = new Date()): State {
+  today = new Date(today)
   return {
-    min: addYears(today, -1),
+    min: today,
     max: addYears(today, 10),
     start: today,
     return: today,
