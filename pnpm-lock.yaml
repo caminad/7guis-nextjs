@@ -8,9 +8,7 @@ specifiers:
   '@types/react': 18.0.12
   '@types/react-dom': 18.0.5
   '@typescript-eslint/eslint-plugin': 5.28.0
-  '@typescript-eslint/parser': 5.28.0
   big.js: 6.2.0
-  eslint: 8.17.0
   eslint-config-next: 12.1.6
   next: 12.1.6
   prettier: 2.7.0
@@ -33,8 +31,6 @@ devDependencies:
   '@types/react': 18.0.12
   '@types/react-dom': 18.0.5
   '@typescript-eslint/eslint-plugin': 5.28.0_7yumg2qjgbp7maccqlfhx2vudu
-  '@typescript-eslint/parser': 5.28.0_ud6rd4xtew5bv4yhvkvu24pzm4
-  eslint: 8.17.0
   eslint-config-next: 12.1.6_qwqcuvhue6diaz4jqbkm5dp3pa
   prettier: 2.7.0
   sass: 1.52.3
