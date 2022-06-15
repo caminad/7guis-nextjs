@@ -9,7 +9,6 @@ export function TemperatureInput(props: TemperatureInputProps) {
   return (
     <input
       type="number"
-      inputMode="decimal"
       placeholder={props.placeholder}
       value={props.value}
       onChange={(e) => props.onChange(e.currentTarget.value)}
