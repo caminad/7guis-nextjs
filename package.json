@@ -8,7 +8,8 @@
     "format": "prettier --write --cache --loglevel warn .",
     "lint": "next lint",
     "start": "next start",
-    "stories": "ladle serve"
+    "stories": "ladle serve",
+    "unused": "ts-prune --ignore '^pages/' --skip '\\w+\\.stories\\.tsx$' --error"
   },
   "dependencies": {
     "big.js": "6.2.0",
@@ -27,6 +28,7 @@
     "eslint-config-next": "12.1.6",
     "prettier": "2.7.0",
     "sass": "1.52.3",
+    "ts-prune": "0.10.3",
     "typescript": "4.7.3"
   }
 }
