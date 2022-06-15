@@ -1,6 +1,6 @@
 import { useReducer } from 'react'
 import { Action } from '../../lib/action'
-import { Canvas, RedoButton, UndoButton } from './components'
+import { Canvas, RedoButton, UndoButton } from './ui'
 import { reducer, State } from './state'
 
 export default function CircleDrawer() {

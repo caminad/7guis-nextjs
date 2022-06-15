@@ -1,6 +1,6 @@
 import { useReducer } from 'react'
 import { Action } from '../../lib/action'
-import { TemperatureInput } from './components'
+import { TemperatureInput } from './ui'
 import { reducer, State } from './state'
 
 export default function TemperatureConverter() {

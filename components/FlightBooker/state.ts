@@ -1,5 +1,5 @@
 import type { Action } from '../../lib/action'
-import { addYears, clampDate } from './models'
+import { addYears, clampDate } from './model'
 
 export interface State {
   readonly min: Date

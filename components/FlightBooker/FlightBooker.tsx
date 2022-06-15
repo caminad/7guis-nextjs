@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useState } from 'react'
 import { Action } from '../../lib/action'
-import { DateInput, SwitchInput } from './components'
+import { DateInput, SwitchInput } from './ui'
 import { reducer, State } from './state'
 
 function processBooking(data: FormData) {

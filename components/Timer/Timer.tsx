@@ -1,6 +1,6 @@
 import { useReducer } from 'react'
 import { Action } from '../../lib/action'
-import { DurationInput, TimeProgress } from './components'
+import { DurationInput, TimeProgress } from './ui'
 import { useAnimationEffect } from './hooks'
 import { reducer, State } from './state'
 

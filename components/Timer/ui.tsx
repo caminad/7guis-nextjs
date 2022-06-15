@@ -1,5 +1,5 @@
 import type { Dispatch } from 'react'
-import { DEFAULT_MAX_DURATION } from './constants'
+import { DEFAULT_MAX_DURATION } from './model'
 
 const nf = new Intl.NumberFormat(undefined, {
   style: 'unit',
