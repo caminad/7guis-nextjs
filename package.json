@@ -11,6 +11,7 @@
     "stories": "ladle serve",
     "unused": "ts-prune --ignore '^pages/' --skip '\\w+\\.stories\\.tsx$' --error"
   },
+  "packageManager": "pnpm@7.2.1",
   "dependencies": {
     "big.js": "6.2.0",
     "next": "12.1.6",
