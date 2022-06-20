@@ -19,7 +19,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
       - run: pnpm unused
-      - run: pnpm prettier --cache --check .
+      - run: pnpm prettier --check .
 
   Test:
     runs-on: ubuntu-latest
