@@ -1,5 +1,8 @@
-import type { Action } from '../../lib/action'
-import { celsiusToFahrenheit, fahrenheitToCelsius } from './model'
+import type { Action } from '../lib/state'
+import {
+  celsiusToFahrenheit,
+  fahrenheitToCelsius,
+} from './TemperatureConverter.model'
 
 export interface State {
   readonly celsius: string

@@ -1,4 +1,4 @@
-import type { Action } from '../../lib/action'
+import type { Action } from '../lib/state'
 
 export interface State {
   readonly names: readonly string[]

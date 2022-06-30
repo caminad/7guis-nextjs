@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useRef, useState } from 'react'
-import { Action } from '../../lib/action'
-import { reducer, State } from './state'
+import { Action } from '../lib/state'
+import { reducer, State } from './Crud.state'
 
 export default function Crud() {
   const [state, dispatch] = useReducer(reducer, undefined, State)

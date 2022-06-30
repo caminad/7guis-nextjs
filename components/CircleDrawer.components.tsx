@@ -1,6 +1,6 @@
 import type { Dispatch, DispatchWithoutAction } from 'react'
-import { Circle, deduplicateCircles, growCircle } from './model'
-import styles from './ui.module.css'
+import { Circle, deduplicateCircles, growCircle } from './CircleDrawer.model'
+import styles from './CircleDrawer.module.css'
 
 interface UndoButtonProps {
   readonly disabled: boolean

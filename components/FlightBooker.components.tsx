@@ -1,5 +1,5 @@
 import type { Dispatch } from 'react'
-import { toISODateString } from './model'
+import { toISODateString } from './FlightBooker.model'
 
 interface SwitchInputProps {
   readonly defaultChecked: boolean

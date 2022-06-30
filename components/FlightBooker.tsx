@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useState } from 'react'
-import { Action } from '../../lib/action'
-import { DateInput, SwitchInput } from './ui'
-import { reducer, State } from './state'
+import { Action } from '../lib/state'
+import { DateInput, SwitchInput } from './FlightBooker.components'
+import { reducer, State } from './FlightBooker.state'
 
 function processBooking(data: FormData) {
   const dates = {

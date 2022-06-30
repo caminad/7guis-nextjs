@@ -1,0 +1,7 @@
+{
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "package.json": ".eslint*, .npm*, .prettier*, pnpm-lock.yaml",
+    "*.tsx": "${capture}.*.ts, ${capture}.*.tsx, ${capture}.module.css"
+  }
+}

@@ -1,7 +1,7 @@
 import { useReducer } from 'react'
-import { Action } from '../../lib/action'
-import { TemperatureInput } from './ui'
-import { reducer, State } from './state'
+import { Action } from '../lib/state'
+import { TemperatureInput } from './TemperatureConverter.components'
+import { reducer, State } from './TemperatureConverter.state'
 
 export default function TemperatureConverter() {
   const [state, dispatch] = useReducer(reducer, undefined, State)

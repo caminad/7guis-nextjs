@@ -1,5 +1,5 @@
-import type { Action } from '../../lib/action'
-import { DEFAULT_INITIAL_DURATION } from './model'
+import type { Action } from '../lib/state'
+import { DEFAULT_INITIAL_DURATION } from './Timer.model'
 
 export interface State {
   readonly time: number

@@ -1,8 +1,8 @@
 import { useReducer } from 'react'
-import { Action } from '../../lib/action'
-import { DurationInput, TimeProgress } from './ui'
-import { useAnimationEffect } from './hooks'
-import { reducer, State } from './state'
+import { Action } from '../lib/state'
+import { DurationInput, TimeProgress } from './Timer.components'
+import { useAnimationEffect } from './Timer.hooks'
+import { reducer, State } from './Timer.state'
 
 interface TimerProps {
   readonly initialDuration?: number

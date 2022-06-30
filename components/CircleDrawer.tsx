@@ -1,7 +1,7 @@
 import { useReducer } from 'react'
-import { Action } from '../../lib/action'
-import { Canvas, RedoButton, UndoButton } from './ui'
-import { reducer, State } from './state'
+import { Action } from '../lib/state'
+import { Canvas, RedoButton, UndoButton } from './CircleDrawer.components'
+import { reducer, State } from './CircleDrawer.state'
 
 export default function CircleDrawer() {
   const [state, dispatch] = useReducer(reducer, undefined, State)

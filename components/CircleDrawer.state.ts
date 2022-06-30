@@ -1,5 +1,5 @@
-import type { Action } from '../../lib/action'
-import type { Circle } from './model'
+import type { Action } from '../lib/state'
+import type { Circle } from './CircleDrawer.model'
 
 export interface State {
   readonly circles: readonly Circle[]
