@@ -7,7 +7,6 @@
     "dev": "next dev",
     "format": "prettier --write --cache --loglevel warn .",
     "lint": "next lint",
-    "prepare": "git config --add core.hooksPath .githooks",
     "start": "next start",
     "stories": "ladle serve",
     "test": "vitest",
