@@ -2,5 +2,4 @@
 
 set -eu
 
-pnpm install --frozen-lockfile
-pnpm lint
+./node_modules/.bin/next lint
