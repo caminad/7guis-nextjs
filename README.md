@@ -6,5 +6,5 @@ This is an experimental project.
 
 ```sh
 git config --add core.hooksPath .githooks
-pnpm install
+npm install
 ```

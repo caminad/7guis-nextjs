@@ -11,24 +11,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2.2.2
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm lint
-      - run: pnpm unused
-      - run: pnpm prettier --check .
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run unused
+      - run: npx prettier --check .
 
   Test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2.2.2
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm test
+          cache: npm
+      - run: npm ci
+      - run: npm test
