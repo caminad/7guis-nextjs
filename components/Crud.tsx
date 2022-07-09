@@ -1,34 +1,27 @@
-import { useEffect, useReducer, useRef, useState } from 'react'
+import { useReducer, useState } from 'react'
 import { Action } from '../lib/state'
+import { Person } from './Crud.model'
 import { reducer, State } from './Crud.state'
 
 export default function Crud() {
   const [state, dispatch] = useReducer(reducer, undefined, State)
   const [filter, setFilter] = useState('')
-  const [hasSelection, setHasSelection] = useState(false)
 
-  const ref = useRef<HTMLFormElement>(null)
+  const isUpdate = state.people.some((p) => p._id === state.draft._id)
 
-  useEffect(() => {
-    const data = new FormData(ref.current!)
-    setHasSelection(data.has('selected'))
-  }, [filter, state])
-
-  const filteredNames = Array.from(state.names)
-    .filter((n) => n.toLowerCase().startsWith(filter))
-    .sort()
+  const filteredPeople = state.people
+    .filter((p) => Person.test(p, filter))
+    .sort(Person.cmp)
 
   return (
     <form
-      ref={ref}
-      onChange={(e) => {
-        const data = new FormData(e.currentTarget)
-        setHasSelection(data.has('selected'))
-      }}
       onSubmit={(e) => {
         e.preventDefault()
-        const data = new FormData(e.currentTarget)
-        dispatch(Action('create', data))
+        if (isUpdate) {
+          dispatch(Action('update'))
+        } else {
+          dispatch(Action('create'))
+        }
       }}
     >
       <div className="grid">
@@ -38,7 +31,7 @@ export default function Crud() {
             type="search"
             value={filter}
             onChange={(e) => {
-              setFilter(e.currentTarget.value.toLowerCase())
+              setFilter(e.currentTarget.value.toLocaleLowerCase())
             }}
           />
         </label>
@@ -46,44 +39,59 @@ export default function Crud() {
       </div>
       <div className="grid">
         <fieldset>
-          {filteredNames.map((name) => (
-            <label key={name}>
-              <input type="radio" name="selected" value={name} /> {name}
+          {filteredPeople.map((person) => (
+            <label key={person._id}>
+              <input
+                type="checkbox"
+                name="selected"
+                value={person._id}
+                checked={state.draft._id === person._id}
+                onChange={(e) => {
+                  if (e.currentTarget.checked) {
+                    dispatch(Action('select', person))
+                  } else {
+                    dispatch(Action('select', null))
+                  }
+                }}
+              />{' '}
+              {person.familyName}, {person.givenName}
             </label>
           ))}
         </fieldset>
         <fieldset>
           <label>
-            Name
-            <input type="text" name="name" required />
+            Given name
+            <input
+              type="text"
+              name="givenName"
+              value={state.draft.givenName}
+              onChange={(e) => {
+                dispatch(Action('givenName', e.currentTarget.value))
+              }}
+              required
+            />
           </label>
           <label>
-            Surname
-            <input type="text" name="surname" />
+            Family name
+            <input
+              type="text"
+              name="familyName"
+              value={state.draft.familyName}
+              onChange={(e) => {
+                dispatch(Action('familyName', e.currentTarget.value))
+              }}
+            />
           </label>
         </fieldset>
       </div>
       <div className="grid">
-        <button type="submit">Create</button>
+        <button type="submit">{isUpdate ? 'Update' : 'Create'}</button>
         <button
           type="button"
-          disabled={!hasSelection}
-          onClick={(e) => {
-            if (e.currentTarget.form!.reportValidity()) {
-              const data = new FormData(e.currentTarget.form!)
-              dispatch(Action('update', data))
-            }
-          }}
-          className="outline"
-        >
-          Update
-        </button>
-        <button
-          type="button"
-          disabled={!hasSelection}
-          onClick={(e) => {
-            const data = new FormData(e.currentTarget.form!)
-            dispatch(Action('delete', data))
+          disabled={!isUpdate}
+          onClick={() => {
+            dispatch(Action('delete'))
+            setFilter('')
           }}
           className="contrast outline"
         >
