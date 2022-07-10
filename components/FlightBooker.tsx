@@ -1,7 +1,7 @@
-import { useEffect, useReducer, useState } from 'react'
+import { useReducer } from 'react'
 import { Action } from '../lib/state'
 import { DateInput, SwitchInput } from './FlightBooker.components'
-import { reducer, State } from './FlightBooker.state'
+import { flightBookerReducer, FlightBookerState } from './FlightBooker.state'
 
 function processBooking(data: FormData) {
   const dates = {
@@ -9,30 +9,32 @@ function processBooking(data: FormData) {
     return: data.get('return') as string | null,
   }
   if (!dates.return) {
-    return `Booking a one-way flight on ${dates.start}`
+    return `Booked a one-way flight on ${dates.start}`
   }
-  return `Booking a return flight from ${dates.start} to ${dates.return}`
+  return `Booked a return flight from ${dates.start} to ${dates.return}`
 }
 
 export default function FlightBooker() {
-  const [state, dispatch] = useReducer(reducer, undefined, State)
-  const [message, setMessage] = useState('')
-
-  useEffect(() => setMessage(''), [state])
+  const [state, dispatch] = useReducer(
+    flightBookerReducer,
+    undefined,
+    FlightBookerState
+  )
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault()
         const data = new FormData(e.currentTarget)
-        setMessage(processBooking(data))
+        const message = processBooking(data)
+        dispatch(Action('booking_processed', { message }))
       }}
     >
       <fieldset>
         <label>
           <SwitchInput
             defaultChecked={state.returnEnabled}
-            onChange={(value) => dispatch(Action('enable_return', value))}
+            onChange={(value) => dispatch(Action('return_date_toggled', value))}
           />{' '}
           Return flight
         </label>
@@ -45,7 +47,7 @@ export default function FlightBooker() {
             min={state.min}
             max={state.max}
             value={state.start}
-            onChange={(value) => dispatch(Action('start', value))}
+            onChange={(value) => dispatch(Action('start_date_changed', value))}
           />
         </label>
         <label>
@@ -56,12 +58,12 @@ export default function FlightBooker() {
             min={state.min}
             max={state.max}
             value={state.return}
-            onChange={(value) => dispatch(Action('return', value))}
+            onChange={(value) => dispatch(Action('return_date_changed', value))}
           />
         </label>
       </div>
       <button type="submit">Book</button>
-      {message && <p>ℹ️ {message}</p>}
+      {state.message && <p>ℹ️ {state.message}</p>}
     </form>
   )
 }

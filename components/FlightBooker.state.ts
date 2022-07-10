@@ -1,50 +1,64 @@
 import type { Action } from '../lib/state'
 import { addYears, clampDate } from './FlightBooker.model'
 
-export interface State {
+export interface FlightBookerState {
   readonly min: Date
   readonly max: Date
   readonly start: Date
   readonly return: Date
   readonly returnEnabled: boolean
+  readonly message: string
 }
-export function State(today: number | Date = new Date()): State {
-  today = new Date(today)
+export function FlightBookerState(): FlightBookerState {
+  const today = new Date()
   return {
     min: today,
     max: addYears(today, 10),
     start: today,
     return: today,
     returnEnabled: false,
+    message: '',
   }
 }
 
-function fixStart(state: State): State {
-  const limits = { min: state.min, max: state.return }
-  return { ...state, start: clampDate(state.start, limits) }
-}
-
-function fixReturn(state: State): State {
-  if (!state.returnEnabled) {
-    // Return field is disabled so an invalid date won't break the form.
-    return state
-  }
-  const limits = { min: state.start, max: state.max }
-  return { ...state, return: clampDate(state.return, limits) }
-}
-
-export function reducer(
-  state: State,
-  action: Action<'start' | 'return', Date> | Action<'enable_return', boolean>
-): State {
-  console.log(state, action)
+export function flightBookerReducer(
+  state: FlightBookerState,
+  action:
+    | Action<'start_date_changed' | 'return_date_changed', Date>
+    | Action<'return_date_toggled', boolean>
+    | Action<'booking_processed', { message: string }>
+): FlightBookerState {
   switch (action.type) {
-    case 'start':
-      return fixReturn({ ...state, start: clampDate(action.payload, state) })
-    case 'return':
-      return fixStart({ ...state, return: clampDate(action.payload, state) })
-    case 'enable_return':
-      return fixReturn({ ...state, returnEnabled: action.payload })
+    case 'start_date_changed':
+      return {
+        ...state,
+        start: clampDate(action.payload, state),
+        return: state.returnEnabled
+          ? clampDate(state.return, { min: action.payload, max: state.max })
+          : state.return,
+        message: '',
+      }
+    case 'return_date_changed':
+      return {
+        ...state,
+        start: clampDate(state.start, { min: state.min, max: action.payload }),
+        return: clampDate(action.payload, state),
+        message: '',
+      }
+    case 'return_date_toggled':
+      return {
+        ...state,
+        return: action.payload
+          ? clampDate(state.return, { min: state.start, max: state.max })
+          : state.return,
+        returnEnabled: action.payload,
+        message: '',
+      }
+    case 'booking_processed':
+      return {
+        ...state,
+        message: action.payload.message,
+      }
     default:
       return state
   }
