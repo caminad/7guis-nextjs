@@ -7,6 +7,6 @@ A project to mess around with Next.js configuration.
 Node.js 18.x is required for development as [happy-dom](https://github.com/capricorn86/happy-dom) does not mock [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData).
 
 ```sh
-git config --add core.hooksPath .githooks
+git config core.hooksPath .githooks
 npm install
 ```
