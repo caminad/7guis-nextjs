@@ -1,4 +1,4 @@
-import '../styles/main.scss'
+import '../src/styles/main.scss'
 
 interface WrapperProps {
   readonly children: React.ReactNode
