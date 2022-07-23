@@ -10,7 +10,7 @@
     "start": "next start",
     "stories": "ladle serve",
     "test": "vitest",
-    "unused": "ts-prune --ignore '^pages/' --skip '\\w+\\.stories\\.tsx$' --error"
+    "unused": "ts-prune --ignore '^src/pages/' --skip '\\w+\\.stories\\.tsx$' --error"
   },
   "dependencies": {
     "big.js": "6.2.1",
