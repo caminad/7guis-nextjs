@@ -30,7 +30,7 @@
     "@vitejs/plugin-react": "2.1.0",
     "eslint": "8.26.0",
     "eslint-config-next": "12.3.1",
-    "happy-dom": "7.6.4",
+    "happy-dom": "7.6.6",
     "prettier": "2.7.1",
     "sass": "1.55.0",
     "ts-prune": "0.10.3",
