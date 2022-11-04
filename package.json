@@ -24,7 +24,7 @@
     "@testing-library/react": "13.4.0",
     "@types/big.js": "6.1.6",
     "@types/node": "18.11.9",
-    "@types/react": "18.0.24",
+    "@types/react": "18.0.25",
     "@types/react-dom": "18.0.8",
     "@typescript-eslint/eslint-plugin": "5.42.0",
     "@vitejs/plugin-react": "2.2.0",
