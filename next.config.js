@@ -2,7 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
-    browsersListForSwc: true,
     legacyBrowsers: false,
     newNextLinkBehavior: true,
   },
