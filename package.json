@@ -19,7 +19,7 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@ladle/react": "2.7.2",
+    "@ladle/react": "2.7.4",
     "@picocss/pico": "1.5.7",
     "@testing-library/react": "13.4.0",
     "@types/big.js": "6.1.6",
