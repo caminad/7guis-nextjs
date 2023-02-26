@@ -23,7 +23,7 @@
     "@picocss/pico": "1.5.7",
     "@testing-library/react": "14.0.0",
     "@types/big.js": "6.1.6",
-    "@types/node": "18.14.1",
+    "@types/node": "18.14.2",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
     "@typescript-eslint/eslint-plugin": "5.53.0",
