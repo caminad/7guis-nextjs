@@ -48,7 +48,7 @@ export function Canvas(props: CanvasProps) {
         const rect = e.currentTarget.getBoundingClientRect()
         props.onAdd(Circle(e.clientX - rect.x, e.clientY - rect.y))
       }}
-      className={styles.Canvas}
+      className={styles['Canvas']}
     >
       {deduplicateCircles(props.circles).map((circle) => (
         <circle

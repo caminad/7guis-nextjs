@@ -4,7 +4,7 @@ function tryBig(value: string): Big | undefined {
   try {
     return new Big(value)
   } catch {
-    // ignore
+    return undefined
   }
 }
 

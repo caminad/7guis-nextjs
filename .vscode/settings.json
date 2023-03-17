@@ -3,5 +3,6 @@
   "explorer.fileNesting.patterns": {
     "package.json": "package-lock.json, .eslint*, .npm*, .prettier*",
     "*.tsx": "${capture}.*.ts, ${capture}.*.tsx, ${capture}.module.css"
-  }
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
