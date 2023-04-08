@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@ladle/react": "2.10.2",
-    "@picocss/pico": "1.5.7",
+    "@picocss/pico": "1.5.8",
     "@testing-library/react": "14.0.0",
     "@tsconfig/next-strictest": "1.0.1",
     "@types/big.js": "6.1.6",
